@@ -8,16 +8,19 @@ export default function Tasks() {
       id: uuidv4(),
       description: "Read the Bible",
       completed: false,
+      label: "Personal"
     },
     {
       id: uuidv4(),
       description: "Cook lunch",
       completed: false,
+      label: "Housechores"
     },
     {
       id: uuidv4(),
       description: "Study React",
       completed: false,
+      label: "Studies"
     },
   ]);
 
@@ -48,6 +51,17 @@ export default function Tasks() {
     setTasks(updatedTasks);
   };
 
+  // function that changes the label of the task
+  const handleChangeLabel = (id, newLabel) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.forEach((task) => {
+      if (task.id === id) {
+        task.label = newLabel;
+      }
+    });
+    setTasks(updatedTasks);
+  }
+
   return (
     <>
       <h1>These are the tasks:</h1>
@@ -58,6 +72,9 @@ export default function Tasks() {
             id={task.id}
             description={task.description}
             completed={task.completed}
+            label={task.label}
+            priority={task.priority}
+            handleChangeLabel={handleChangeLabel}
             handleStatusChange={handleStatusChange}
             handleRemoveTask={handleRemoveTask}
           />
