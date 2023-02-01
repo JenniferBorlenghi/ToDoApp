@@ -10,19 +10,16 @@ export default function Tasks() {
       id: uuidv4(),
       description: "Read the Bible",
       completed: false,
-      label: "Personal",
     },
     {
       id: uuidv4(),
       description: "Cook lunch",
       completed: false,
-      label: "Housechores",
     },
     {
       id: uuidv4(),
       description: "Study React",
       completed: false,
-      label: "Studies",
     },
   ]);
 
@@ -74,11 +71,10 @@ export default function Tasks() {
             id={task.id}
             description={task.description}
             completed={task.completed}
-            label={task.label}
             priority={task.priority}
-            handleChangeLabel={handleChangeLabel}
-            handleStatusChange={handleStatusChange}
-            handleRemoveTask={handleRemoveTask}
+            onChangeLabel={handleChangeLabel}
+            onStatusChange={handleStatusChange}
+            onRemoveTask={handleRemoveTask}
           />
         );
       })}

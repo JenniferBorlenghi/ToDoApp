@@ -1,5 +1,5 @@
 import { Layout, theme } from "antd";
-import AppName from "./components/AppName";
+import AppHeader from "./components/AppHeader";
 import Tasks from "./components/Tasks";
 
 const { Header, Content, Footer } = Layout;
@@ -12,7 +12,7 @@ function App() {
   return (
     <Layout className="layout">
       <Header>
-        <AppName />
+        <AppHeader />
       </Header>
 
       <Content style={{ padding: "0 50px" }}>
@@ -25,7 +25,6 @@ function App() {
       </Content>
 
       <Footer style={{ textAlign: "center" }}>
-        Todo App ©2023 Created by Jennifer Borlenghi de Brito
       </Footer>
     </Layout>
   );

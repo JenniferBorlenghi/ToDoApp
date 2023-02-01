@@ -4,48 +4,27 @@ import {
   DeleteOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
-import { Button, Space, Select, Divider, Popconfirm } from "antd";
+import { Button, Space, Divider, Popconfirm } from "antd";
 
 export default function Task({
   id,
   description,
   completed,
-  label,
-  handleChangeLabel,
-  handleStatusChange,
-  handleRemoveTask,
+  onStatusChange,
+  onRemoveTask,
 }) {
   const changeTaskStatus = () => {
-    handleStatusChange(id);
+    onStatusChange(id);
   };
 
   const removeTask = () => {
-    handleRemoveTask(id);
-  };
-
-  const changeLabel = (newLabel) => {
-    handleChangeLabel(id, newLabel);
+    onRemoveTask(id);
   };
 
   return (
     <>
       <h3>{description}</h3>
       <p>Id: {id}</p>
-
-      <div>
-        <span>Label: </span>
-        <Select
-          defaultValue={label}
-          style={{ width: 120 }}
-          onChange={changeLabel}
-          options={[
-            { value: "Personal", label: "Personal" },
-            { value: "Housechores", label: "Housechores" },
-            { value: "Studies", label: "Studies" },
-            { value: "Work", label: "Work" },
-          ]}
-        />
-      </div>
 
       <p>
         Status:{" "}
