@@ -6,13 +6,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: uuidv4(),
-      description: "Read the Bible",
-      status: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   const handleNewTask = (description, status) => {
     const newTasks = [...tasks];
@@ -24,6 +18,7 @@ function App() {
     setTasks(newTasks);
   };
 
+  // function that change the status between completed and not completed (toggle between them)
   const handleStatusChange = (id) => {
     const updatedTasks = [...tasks];
     updatedTasks.forEach((task) => {
@@ -34,11 +29,13 @@ function App() {
     setTasks(updatedTasks);
   };
 
+  // function that remove a specific task
   const handleRemoveTask = (id) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
   };
 
+  // function that delete all tasks
   const handleClearTasks = () => {
     setTasks([]);
   };

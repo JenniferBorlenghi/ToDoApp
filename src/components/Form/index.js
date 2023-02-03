@@ -40,9 +40,24 @@ export default function Form({onNewTask}) {
 
     if (newErrorMessages.length === 0) {
       onNewTask(description, status);
-      console.log("sent");
+      
+      // cleaning inputs:
+      setDescription("");
+      setStatus("");
     }
   };
+
+  // array of categories - less in database and content for the user
+  const categories = [
+    {id: 0, content: "Personal"},
+    {id: 1, content: "College"},
+    {id: 2, content: "University"},
+    {id: 3, content: "School"},
+    {id: 4, content: "Studies"},
+    {id: 5, content: "Work"},
+    {id: 6, content: "House Chores"},
+    {id: 7, content: "Appointments"},
+  ]
 
   return (
     <>
