@@ -6,18 +6,6 @@ export default function Tasks({
   onRemoveTask,
   onClearTasks,
 }) {
-  
-  const handleClearTasks = () => {
-    onClearTasks();
-  };
-
-  const handleStatusChange = (id) => {
-    onStatusChange(id);
-  };
-
-  const handleRemoveTask = (id) => {
-    onRemoveTask(id);
-  };
 
   return (
     <>
@@ -28,15 +16,13 @@ export default function Tasks({
             return (
               <Task
                 key={index}
-                id={task.id}
-                description={task.description}
-                completed={task.completed}
-                onStatusChange={handleStatusChange}
-                onRemoveTask={handleRemoveTask}
+                task={task}
+                onStatusChange={onStatusChange}
+                onRemoveTask={onRemoveTask}
               />
             );
           })}
-          <button onClick={handleClearTasks}>Clear Tasks</button>
+          <button onClick={onClearTasks}>Clear Tasks</button>
         </>
       )}
       {tasks.length === 0 &&

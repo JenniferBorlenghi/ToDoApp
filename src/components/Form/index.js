@@ -1,19 +1,10 @@
 import { useState } from "react";
 
-export default function Form({onNewTask}) {
+export default function Form({ onNewTask }) {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
-
-  // updating description as the user changes it
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  // updating status as the user changes it
-  const handleStatusChange = (e) => {
-    setStatus(e.target.value);
-  };
+  const [priority, setPriority] = useState("");
 
   // validating submission and adding the new task
   const handleSubmit = (e) => {
@@ -35,29 +26,40 @@ export default function Form({onNewTask}) {
     if (status === "") {
       newErrorMessages.push("The status is required.");
     }
+    if (priority === "") {
+      newErrorMessages.push("The priority is required.");
+    }
 
     setErrorMessages(newErrorMessages);
 
     if (newErrorMessages.length === 0) {
-      onNewTask(description, status);
-      
+      onNewTask(description, status, priority);
+
       // cleaning inputs:
       setDescription("");
       setStatus("");
+      setPriority("");
     }
   };
 
-  // array of categories - less in database and content for the user
-  const categories = [
-    {id: 0, content: "Personal"},
-    {id: 1, content: "College"},
-    {id: 2, content: "University"},
-    {id: 3, content: "School"},
-    {id: 4, content: "Studies"},
-    {id: 5, content: "Work"},
-    {id: 6, content: "House Chores"},
-    {id: 7, content: "Appointments"},
-  ]
+  const priorityOptions = [
+    { id: "1", content: "P1" },
+    { id: "2", content: "P2" },
+    { id: "3", content: "P3" },
+    { id: "4", content: "P4" },
+  ];
+
+  const PriorityInputsComponent = priorityOptions.map((item) => (
+    <label key={item.id}>
+      <input
+        type="radio"
+        value={item.content}
+        checked={priority === item.content}
+        onChange={(e) => setPriority(e.target.value)}
+      />
+      {item.content}
+    </label>
+  ));
 
   return (
     <>
@@ -74,6 +76,7 @@ export default function Form({onNewTask}) {
 
       <h2>Add a New Task:</h2>
       <form onSubmit={handleSubmit}>
+        {/* Description Input - Text*/}
         <label>
           Description:
           <input
@@ -81,18 +84,40 @@ export default function Form({onNewTask}) {
             maxLength={150}
             placeholder="Enter a description"
             value={description}
-            onChange={handleDescriptionChange}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </label>
 
+        <br />
+        <br />
+
+        {/* Status Input - Select*/}
         <label>
           Status:
-          <select value={status} onChange={handleStatusChange}>
-            <option value="">- Select -</option>
-            <option value={false}>Open</option>
-            <option value={true}>Completed</option>
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="" key="0">
+              - Select -
+            </option>
+            <option value="Not Completed" key="1">
+              Open
+            </option>
+            <option value="Completed" key="2">
+              Completed
+            </option>
           </select>
         </label>
+
+        <br />
+        <br />
+
+        {/* Priority Input - Radio */}
+        <div>
+          Priority:
+          {PriorityInputsComponent}
+        </div>
+     
+        <br />
+        <br />
 
         <button>Add</button>
       </form>

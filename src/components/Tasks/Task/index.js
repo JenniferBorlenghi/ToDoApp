@@ -1,23 +1,23 @@
 export default function Task({
   id,
-  description,
-  completed,
+  task,
   onStatusChange,
   onRemoveTask,
 }) {
   const changeTaskStatus = () => {
-    onStatusChange(id);
+    onStatusChange(task.id);
   };
 
   const removeTask = () => {
-    onRemoveTask(id);
+    onRemoveTask(task.id);
   };
 
   return (
     <>
-      <h3>{description}</h3>
-      <p>Id: {id}</p>
-      <p>Status: {completed ? "Completed" : "Not Completed"}</p>
+      <h3>{task.description}</h3>
+      <p>Id: {task.id}</p>
+      <p>Status: {task.status}</p>
+      <p>Priority: {task.priority}</p>
       <button onClick={changeTaskStatus}>Change Status</button>
       <button onClick={removeTask}>Remove Task</button>
       <hr />
