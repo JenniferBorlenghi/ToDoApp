@@ -2,15 +2,15 @@ export default function Task({
   id,
   description,
   completed,
-  handleStatusChange,
-  handleRemoveTask,
+  onStatusChange,
+  onRemoveTask,
 }) {
   const changeTaskStatus = () => {
-    handleStatusChange(id);
+    onStatusChange(id);
   };
 
   const removeTask = () => {
-    handleRemoveTask(id);
+    onRemoveTask(id);
   };
 
   return (
