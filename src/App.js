@@ -1,32 +1,63 @@
-import { Layout, theme } from "antd";
-import AppHeader from "./components/AppHeader";
+import Header from "./components/Header";
 import Tasks from "./components/Tasks";
+import Form from "./components/Form";
 
-const { Header, Content, Footer } = Layout;
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const [tasks, setTasks] = useState([]);
+
+  const handleNewTask = (description, status, priority, details,categories) => {
+    const newTasks = [...tasks];
+    newTasks.push({
+      id: uuidv4(),
+      description,
+      status,
+      priority,
+      details,
+      categories
+    });
+    setTasks(newTasks);
+  };
+
+  // function that change the status between completed and not completed (toggle between them)
+  const handleStatusChange = (id) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.forEach((task) => {
+      if (task.id === id) {
+        if (task.status === 'Completed'){
+          task.status = 'Not Completed'
+        } else {
+          task.status = 'Completed'
+        }
+      }
+    });
+    setTasks(updatedTasks);
+  };
+
+  // function that remove a specific task
+  const handleRemoveTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
+  // function that delete all tasks
+  const handleClearTasks = () => {
+    setTasks([]);
+  };
 
   return (
-    <Layout className="layout">
-      <Header>
-        <AppHeader />
-      </Header>
-
-      <Content style={{ padding: "0 50px" }}>
-        <div
-          className="site-layout-content"
-          style={{ background: colorBgContainer }}
-        >
-          <Tasks />
-        </div>
-      </Content>
-
-      <Footer style={{ textAlign: "center" }}>
-      </Footer>
-    </Layout>
+    <div>
+      <Header />
+      <Tasks
+        tasks={tasks}
+        onStatusChange={handleStatusChange}
+        onRemoveTask={handleRemoveTask}
+        onClearTasks={handleClearTasks}
+      />
+      <Form onNewTask={handleNewTask} />
+    </div>
   );
 }
 
