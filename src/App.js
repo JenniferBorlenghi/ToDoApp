@@ -8,13 +8,15 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const handleNewTask = (description, status, priority) => {
+  const handleNewTask = (description, status, priority, details,categories) => {
     const newTasks = [...tasks];
     newTasks.push({
       id: uuidv4(),
       description,
       status,
-      priority
+      priority,
+      details,
+      categories
     });
     setTasks(newTasks);
   };
