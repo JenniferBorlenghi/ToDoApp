@@ -14,9 +14,6 @@ function App() {
       id: uuidv4(),
       description,
       status,
-      priority,
-      details,
-      categories
     });
     setTasks(newTasks);
   };
