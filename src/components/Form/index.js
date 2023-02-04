@@ -89,7 +89,22 @@ export default function Form({ onNewTask }) {
       setCategories(newCategories);
     }
   };
- 
+  
+  const CategoriesInputsComponent = categoriesOptions.map((item) => (
+    <label key={item.id}>
+      <input
+        type="checkbox"
+        name={item.content}
+        checked={categories.includes(item.content)}
+        // checked returns true (option selected) or false (option not selected) -> initially it is false
+        onChange={handleCheckCategory}
+      />
+      {item.content}
+    </label>
+  ))
+
+  
+
   return (
     <>
       {errorMessages.length !== 0 && (
@@ -155,18 +170,9 @@ export default function Form({ onNewTask }) {
         <br />
         <br />
         {/* Category Input - Checkbox */}
-        <div>Label: </div>
-        {categoriesOptions.map((item) => (
-          <label key={item.id}>
-            <input
-              type="checkbox"
-              name={item.content}
-              checked={categories.includes(item.content)}
-              onChange={handleCheckCategory}
-            />
-            {item.content}
-          </label>
-        ))}
+        <div>
+          Categories:{CategoriesInputsComponent}
+        </div>
         <br />
         <br />
         <button>Add</button>
