@@ -36,15 +36,16 @@ export default function Form({ onNewTask }) {
       setPriority("");
       setDetails("");
       setCategories([]);
-
       setErrorMessages("");
     }
   };
 
+  // function that handles the change of status
   const handleStatusChange = (e) => {
+    // if empty, change it direct
     if(e.target.value === ""){
       setStatus(e.target.value);
-    } else {
+    } else { // if true or false, transform the input type string to boolean
       setStatus(JSON.parse(e.target.value));
     }
   }
@@ -56,6 +57,7 @@ export default function Form({ onNewTask }) {
     { id: "P4", content: "Priority 4" },
   ];
 
+  // priority input component (logic to be rendered)
   const PriorityInputsComponent = priorityOptions.map((item) => (
     <label key={item.id}>
       <input
@@ -77,20 +79,23 @@ export default function Form({ onNewTask }) {
     { id: "appt", content: "Appointments" },
   ];
 
+  // function that change categories states adding items in the array according to the user selection
   const handleCheckCategory = (e) => {
     const category = e.target.name;
 
     let newCategories = [...categories];
 
-    if (categories.includes(category)) {
+    // toggle of categories
+    if (categories.includes(category)) { // if not in the category, add it
       newCategories = categories.filter((it) => it !== category);
       setCategories(newCategories);
-    } else {
+    } else { // if in the category, remove it
       newCategories = [...categories, category];
       setCategories(newCategories);
     }
   };
   
+  // categories input component (logic to be rendered)
   const CategoriesInputsComponent = categoriesOptions.map((item) => (
     <label key={item.id}>
       <input

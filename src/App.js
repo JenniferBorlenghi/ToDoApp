@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const [tasks, setTasks] = useState([]);
 
+  // function that add a new taskt to the useState task
   const handleNewTask = (description, status, priority, details,categories) => {
     const newTasks = [...tasks];
     newTasks.push({
