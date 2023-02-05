@@ -14,13 +14,6 @@ export default function Form({ onNewTask }) {
 
     const newErrorMessages = [];
 
-    // checking if the description has more than 5 characters
-    if (description.length < 5) {
-      newErrorMessages.push(
-        "The description must have more than 5 characters."
-      );
-    }
-
     // checking if the required fields (description, status, and priority) are not empty
     if (description === "") {
       newErrorMessages.push("The description is required.");
@@ -47,6 +40,14 @@ export default function Form({ onNewTask }) {
       setErrorMessages("");
     }
   };
+
+  const handleStatusChange = (e) => {
+    if(e.target.value === ""){
+      setStatus(e.target.value);
+    } else {
+      setStatus(JSON.parse(e.target.value));
+    }
+  }
 
   const priorityOptions = [
     { id: "P1", content: "Priority 1" },
@@ -136,16 +137,10 @@ export default function Form({ onNewTask }) {
         {/* Status Input - Select*/}
         <label>
           Status:
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="" key="0">
-              - Select -
-            </option>
-            <option value="Not Completed" key="1">
-              Open
-            </option>
-            <option value="Completed" key="2">
-              Completed
-            </option>
+          <select value={status} onChange={handleStatusChange}>
+            <option value="">- Select -</option>
+            <option value={false}>Open</option>
+            <option value={true}>Completed</option>
           </select>
         </label>
         <br />

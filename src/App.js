@@ -26,11 +26,7 @@ function App() {
     const updatedTasks = [...tasks];
     updatedTasks.forEach((task) => {
       if (task.id === id) {
-        if (task.status === 'Completed'){
-          task.status = 'Not Completed'
-        } else {
-          task.status = 'Completed'
-        }
+        task.status = !task.status;
       }
     });
     setTasks(updatedTasks);
