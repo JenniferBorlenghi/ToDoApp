@@ -8,12 +8,13 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const handleNewTask = (description, status, priority, details,categories) => {
+  const handleNewTask = (description, status) => {
+    console.log('status', status, typeof status)
     const newTasks = [...tasks];
     newTasks.push({
       id: uuidv4(),
       description,
-      status,
+      status
     });
     setTasks(newTasks);
   };
@@ -23,11 +24,7 @@ function App() {
     const updatedTasks = [...tasks];
     updatedTasks.forEach((task) => {
       if (task.id === id) {
-        if (task.status === 'Completed'){
-          task.status = 'Not Completed'
-        } else {
-          task.status = 'Completed'
-        }
+        task.status = !task.status;
       }
     });
     setTasks(updatedTasks);

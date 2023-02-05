@@ -11,7 +11,7 @@ export default function Task({ task, onStatusChange, onRemoveTask }) {
     <>
       <h3>{task.description}</h3>
       <p>Id: {task.id}</p>
-      <p>Status: {task.status}</p>
+      <p>Status: {task.status ? "Completed":"Not Completed"}</p>
       <button onClick={changeTaskStatus}>Change Status</button>
       <button onClick={removeTask}>Remove Task</button>
       <hr />
