@@ -32,10 +32,10 @@ export default function Tasks({
         </>
       )}
       {tasks.length === 0 && (
-        <di className="no-tasks">
+        <div className="no-tasks">
           <h4>No tasks yet!</h4>
           <TbClipboardList />
-        </di>
+        </div>
       )}
     </div>
   );
