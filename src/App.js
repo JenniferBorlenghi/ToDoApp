@@ -5,16 +5,27 @@ import Form from "./components/Form";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import "./styles.scss";
+
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const handleNewTask = (description, status) => {
-    console.log('status', status, typeof status)
+  // function that add a new taskt to the useState task
+  const handleNewTask = (
+    description,
+    status,
+    priority,
+    details,
+    categories
+  ) => {
     const newTasks = [...tasks];
     newTasks.push({
       id: uuidv4(),
       description,
-      status
+      status,
+      priority,
+      details,
+      categories,
     });
     setTasks(newTasks);
   };
@@ -42,15 +53,17 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app-main">
       <Header />
-      <Tasks
-        tasks={tasks}
-        onStatusChange={handleStatusChange}
-        onRemoveTask={handleRemoveTask}
-        onClearTasks={handleClearTasks}
-      />
-      <Form onNewTask={handleNewTask} />
+      <div className="tasks-and-form">
+        <Tasks
+          tasks={tasks}
+          onStatusChange={handleStatusChange}
+          onRemoveTask={handleRemoveTask}
+          onClearTasks={handleClearTasks}
+        />
+        <Form onNewTask={handleNewTask} />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,8 @@
 import Task from "./Task";
+import "./styles.scss";
+
+import { MdCleaningServices } from "react-icons/md";
+import { TbClipboardList } from "react-icons/tb";
 
 export default function Tasks({
   tasks,
@@ -6,9 +10,8 @@ export default function Tasks({
   onRemoveTask,
   onClearTasks,
 }) {
-
   return (
-    <>
+    <div className="tasks-comp">
       {tasks.length > 0 && (
         <>
           <h2>These are the tasks:</h2>
@@ -22,12 +25,18 @@ export default function Tasks({
               />
             );
           })}
-          <button onClick={onClearTasks}>Clear Tasks</button>
+          <button className="clear-button" onClick={onClearTasks}>
+            <MdCleaningServices />
+            Clear Tasks
+          </button>
         </>
       )}
-      {tasks.length === 0 &&
-      <h4>No tasks yet!</h4>
-      }
-    </>
+      {tasks.length === 0 && (
+        <di className="no-tasks">
+          <h4>No tasks yet!</h4>
+          <TbClipboardList />
+        </di>
+      )}
+    </div>
   );
 }

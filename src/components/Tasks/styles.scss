@@ -1,0 +1,73 @@
+@import "./../../styles/variables.scss";
+
+.tasks-comp {
+  display: flex;
+  flex-direction: column;
+
+  h2,
+  h4 {
+    padding-top: 10px;
+
+    color: $secondary-color;
+    align-self: center;
+  }
+
+  h2 {
+    font-size: 23px;
+
+    @include breakpoint-small {
+      font-size: 25px;
+    }
+
+    @include breakpoint-large {
+      font-size: 28px;
+    }
+  }
+
+  .no-tasks {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+
+    h4 {
+      font-size: 20px;
+      padding-left: 10px;
+
+      @include breakpoint-small {
+        font-size: 23px;
+      }
+
+      @include breakpoint-large {
+        font-size: 25px;
+      }
+    }
+
+    svg {
+      display: none;
+      color: $border-color;
+      align-self: center;
+
+      @include breakpoint-medium {
+        display: block;
+        font-size: 300px;
+        margin-top: -3px;
+      }
+      
+    }
+  }
+
+  .clear-button {
+    @include button-style($secondary-color);
+    align-self: center;
+    display: flex;
+    align-self: center;
+    width: 80%;
+    justify-content: center;
+
+    svg {
+      font-size: 17px;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+  }
+}

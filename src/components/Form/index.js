@@ -1,9 +1,14 @@
 import { useState } from "react";
+import "./styles.scss";
+import {MdPostAdd} from "react-icons/md";
 
 export default function Form({ onNewTask }) {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
+  const [priority, setPriority] = useState("");
+  const [details, setDetails] = useState("");
+  const [categories, setCategories] = useState([]);
 
   // validating submission and adding the new task
   const handleSubmit = (e) => {
@@ -18,33 +23,102 @@ export default function Form({ onNewTask }) {
     if (status === "") {
       newErrorMessages.push("The status is required.");
     }
+    if (priority === "") {
+      newErrorMessages.push("The priority is required.");
+    }
 
     setErrorMessages(newErrorMessages);
 
     if (newErrorMessages.length === 0) {
-      onNewTask(description, status);
+      onNewTask(description, status, priority, details, categories);
 
       // cleaning inputs:
       setDescription("");
       setStatus("");
-
+      setPriority("");
+      setDetails("");
+      setCategories([]);
       setErrorMessages("");
     }
   };
 
+  // function that handles the change of status
   const handleStatusChange = (e) => {
-    if(e.target.value === ""){
+    // if empty, change it direct
+    if (e.target.value === "") {
       setStatus(e.target.value);
     } else {
+      // if true or false, transform the input type string to boolean
       setStatus(JSON.parse(e.target.value));
     }
-  }
+  };
+
+  const priorityOptions = [
+    { id: "P1", content: "Priority 1" },
+    { id: "P2", content: "Priority 2" },
+    { id: "P3", content: "Priority 3" },
+    { id: "P4", content: "Priority 4" },
+  ];
+
+  // priority input component (logic to be rendered)
+  const PriorityInputsComponent = priorityOptions.map((item) => (
+    <label key={item.id}>
+      <input
+        type="radio"
+        value={item.id}
+        checked={priority === item.id}
+        onChange={(e) => setPriority(e.target.value)}
+      />
+      {item.id}
+    </label>
+  ));
+
+  const categoriesOptions = [
+    { id: "per", content: "Personal" },
+    { id: "hou", content: "House Chores" },
+    { id: "stu", content: "Study" },
+    { id: "wk", content: "Work" },
+    { id: "fam", content: "Family" },
+    { id: "appt", content: "Appointments" },
+  ];
+
+  // function that change categories states adding items in the array according to the user selection
+  const handleCheckCategory = (e) => {
+    const category = e.target.name;
+
+    let newCategories = [...categories];
+
+    // toggle of categories
+    if (categories.includes(category)) {
+      // if not in the category, add it
+      newCategories = categories.filter((it) => it !== category);
+      setCategories(newCategories);
+    } else {
+      // if in the category, remove it
+      newCategories = [...categories, category];
+      setCategories(newCategories);
+    }
+  };
+
+  // categories input component (logic to be rendered)
+  const CategoriesInputsComponent = categoriesOptions.map((item) => (
+    <label key={item.id}>
+      <input
+        type="checkbox"
+        name={item.content}
+        checked={categories.includes(item.content)}
+        // checked returns true (option selected) or false (option not selected) -> initially it is false
+        onChange={handleCheckCategory}
+      />
+      {item.content}
+    </label>
+  ));
 
   return (
-    <>
+    <div className="form-comp">
       {errorMessages.length !== 0 && (
-        <div>
-          Invalid data:
+        <div className="invalid-data">
+          <p className="invalid-data-title">Invalid data:</p>
           <ul>
             {errorMessages.map((error, index) => (
               <li key={index}>{error}</li>
@@ -66,21 +140,41 @@ export default function Form({ onNewTask }) {
             onChange={(e) => setDescription(e.target.value)}
           />
         </label>
-        <br />
-        <br />
+
         {/* Status Input - Select*/}
+        <div className="status-field">
+          <label>
+            Status:
+            <select value={status} onChange={handleStatusChange}>
+              <option value="">- Select -</option>
+              <option value={false}>Open</option>
+              <option value={true}>Completed</option>
+            </select>
+          </label>
+        </div>
+
+        {/* Priority Input - Radio */}
+        <div className="priority-field">
+          Priority:
+          {PriorityInputsComponent}
+        </div>
+
+        {/* Details Input - Textarea - not required */}
         <label>
-          Status:
-          <select value={status} onChange={handleStatusChange}>
-            <option value="">- Select -</option>
-            <option value={false}>Open</option>
-            <option value={true}>Completed</option>
-          </select>
+          Details:
+          <textarea
+            maxLength={500}
+            placeholder="Leave the details of the task"
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
+          />
         </label>
-        <br />
-        <br />
-        <button>Add</button>
+
+        {/* Category Input - Checkbox */}
+        <div className="categories-field">Categories:{CategoriesInputsComponent}</div>
+
+        <button><MdPostAdd />Add</button>
       </form>
-    </>
+    </div>
   );
 }

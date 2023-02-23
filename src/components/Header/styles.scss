@@ -1,0 +1,49 @@
+@import "./../../styles/variables.scss";
+
+header.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 25px;
+  background-color: $primary-color;
+  color: white;
+
+  .header-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  svg {
+    margin-right: 15px;
+    font-size: 35px;
+
+    @include breakpoint-small {
+      font-size: 45px;
+    }
+
+    @include breakpoint-large {
+      font-size: 52px;
+    }
+  }
+
+  h1 {
+    font-family: $title-font;
+    font-size: 30px;
+
+    @include breakpoint-small {
+      font-size: 35px;
+    }
+
+    @include breakpoint-large {
+      font-size: 40px;
+    }
+  }
+
+  p {
+    font-family: $title-font;
+    font-size: 17px;
+  }
+}
