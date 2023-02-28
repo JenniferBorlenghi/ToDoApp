@@ -43,7 +43,8 @@
     }
 
     svg {
-      display: none;
+      font-size: 240px;
+      margin-top: -40px;
       color: $border-color;
       align-self: center;
 
@@ -52,7 +53,6 @@
         font-size: 300px;
         margin-top: -3px;
       }
-      
     }
   }
 

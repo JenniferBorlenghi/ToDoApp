@@ -55,15 +55,14 @@ function App() {
   return (
     <div className="app-main">
       <Header />
-      <div className="tasks-and-form">
-        <Tasks
-          tasks={tasks}
-          onStatusChange={handleStatusChange}
-          onRemoveTask={handleRemoveTask}
-          onClearTasks={handleClearTasks}
-        />
-        <Form onNewTask={handleNewTask} />
-      </div>
+      <Tasks
+        tasks={tasks}
+        onStatusChange={handleStatusChange}
+        onRemoveTask={handleRemoveTask}
+        onClearTasks={handleClearTasks}
+      />
+
+      <Form onNewTask={handleNewTask} />
     </div>
   );
 }

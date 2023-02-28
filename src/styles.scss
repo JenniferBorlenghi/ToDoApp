@@ -1,15 +1,7 @@
 @import "./styles/variables.scss";
 
 .app-main {
-    .tasks-and-form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-
-        @include breakpoint-medium {
-            flex-direction: row;
-        }
-        
-    }
-    
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }

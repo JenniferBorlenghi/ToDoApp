@@ -3,116 +3,190 @@
 .form-comp {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  h2 {
-    padding-left: 10px;
-    padding-top: 10px;
-    font-size: 23px;
-    color: $secondary-color;
+  .button-show-modal {
+    margin: 10px;
     align-self: center;
-
-    @include breakpoint-small {
-      font-size: 25px;
-    }
-
-    @include breakpoint-large {
-      font-size: 28px;
-    }
-  }
-  div {
-    margin-bottom: 1rem;
-  }
-
-  form {
     display: flex;
-    flex-direction: column;
-    row-gap: 8px;
-    border: 1px solid $border-color;
-  margin: 10px;
-  border-radius: 10px;
-  padding: 15px;
+    align-items: center;
+    width: 80%;
+    justify-content: center;
+    background-color: $secondary-color;
+    color: white;
+    border: 1px solid $secondary-color;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 16px;
+    font-family: $text-font;
 
-    input[type="text"],
-    textarea,
-    select {
-      box-sizing: border-box;
-      width: 100%;
-      font-size: 1rem;
-      padding: 10px;
-      color: $grey-color;
-      border: solid 1px $border-color;
-      border-radius: 6px;
+    svg {
+      font-size: 20px;
+      margin-right: 5px;
     }
+  }
 
-    textarea {
-      font-family: $text-font;
+  .modal-close {
+    display: none;
+    opacity: 1;
+
+    .form-modal {
+      display: none;
     }
+  }
 
-    .priority-field,
-    .categories-field {
+  .modal-open {
+    background-color: rgb(47 46 44 / 58%);
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 5;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    .form-modal {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      z-index: 20;
+      position: fixed;
+      background-color: white;
+      border-radius: 8px;
+      padding: 10px;
 
-      label {
+      .form-init {
         display: flex;
-        align-items: center;
-        color: $text-color;
-        line-height: 1.2rem;
+        flex-direction: row;
+        justify-content: space-between;
 
-        input {
-          width: 1.2rem;
-          height: 1.2rem;
-          margin-right: 0.5rem;
-          margin-left: 0.5rem;
+        h2 {
+          padding-left: 15px;
+          padding-top: 10px;
+          font-size: 23px;
+          color: $secondary-color;
+          align-self: center;
+
+          @include breakpoint-small {
+            font-size: 25px;
+          }
+
+          @include breakpoint-large {
+            font-size: 28px;
+          }
+        }
+
+        .button-close-modal {
+          border: none;
+          background-color: inherit;
+          align-self: flex-start;
+          cursor: pointer;
+
+          svg {
+            font-size: 35px;
+            padding-right: 8px;
+          }
         }
       }
-    }
 
-    button {
-      align-self: center;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      justify-content: center;
-      background-color: $secondary-color;
-      color: white;
-      border: 1px solid $secondary-color;
-      border-radius: 6px;
-      padding: 8px;
-      font-size: 16px;
-      font-family: $text-font;
+      div {
+        margin-bottom: 1rem;
+      }
 
-      svg {
-        font-size: 20px;
-        margin-right: 5px;
+      form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+        border: 1px solid $border-color;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 15px;
+
+        input[type="text"],
+        textarea,
+        select {
+          box-sizing: border-box;
+          width: 100%;
+          font-size: 1rem;
+          padding: 10px;
+          color: $grey-color;
+          border: solid 1px $border-color;
+          border-radius: 6px;
+        }
+
+        textarea {
+          font-family: $text-font;
+        }
+
+        .priority-field,
+        .categories-field {
+          display: flex;
+          align-items: center;
+
+          label {
+            display: flex;
+            align-items: center;
+            color: $text-color;
+            line-height: 1.2rem;
+
+            input {
+              // width: 1.2rem;
+              height: 1.2rem;
+              margin-right: 0.5rem;
+              margin-left: 0.5rem;
+            }
+          }
+        }
+
+        button {
+          align-self: center;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          background-color: $secondary-color;
+          color: white;
+          border: 1px solid $secondary-color;
+          border-radius: 6px;
+          padding: 8px;
+          font-size: 16px;
+          font-family: $text-font;
+          cursor: pointer;
+
+          svg {
+            font-size: 20px;
+            margin-right: 5px;
+          }
+        }
+      }
+
+      .invalid-data {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border: 1px solid $danger-color;
+        border-radius: 6px;
+        margin: 10px;
+
+        p,
+        ul {
+          padding: 8px;
+        }
+
+        ul {
+          list-style-type: disc;
+          list-style-position: inside;
+        }
+      }
+
+      .invalid-data-title {
+        background-color: $danger-color;
+        color: white;
+        font-weight: bold;
+        border-top: 1px solid $danger-color;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
       }
     }
-  }
-
-  .invalid-data {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border: 1px solid $danger-color;
-    border-radius: 6px;
-
-    p,
-    ul {
-      padding: 8px;
-    }
-
-    ul {
-      list-style-type: disc;
-      list-style-position: inside;
-    }
-  }
-
-  .invalid-data-title {
-    background-color: $danger-color;
-    color: white;
-    font-weight: bold;
-    border-top: 1px solid $danger-color;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
   }
 }

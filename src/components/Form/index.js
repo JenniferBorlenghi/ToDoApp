@@ -1,14 +1,39 @@
 import { useState } from "react";
 import "./styles.scss";
-import {MdPostAdd} from "react-icons/md";
+import { MdPostAdd, MdAddTask } from "react-icons/md";
+import { GrClose } from "react-icons/gr";
 
 export default function Form({ onNewTask }) {
+  const [showModal, setShowModal] = useState(false);
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
   const [priority, setPriority] = useState("");
   const [details, setDetails] = useState("");
   const [categories, setCategories] = useState([]);
+
+  // constant that style the modal when it is opened and closed
+  const modalClass = showModal ? "modal-open" : "modal-close";
+
+  //
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+
+    // cleaning error message
+    setErrorMessages([]);
+
+    // cleaning inputs:
+    setDescription("");
+    setStatus("");
+    setPriority("");
+    setDetails("");
+    setCategories([]);
+    setErrorMessages("");
+  };
 
   // validating submission and adding the new task
   const handleSubmit = (e) => {
@@ -39,6 +64,9 @@ export default function Form({ onNewTask }) {
       setDetails("");
       setCategories([]);
       setErrorMessages("");
+
+      //close modal
+      setShowModal(false);
     }
   };
 
@@ -116,65 +144,86 @@ export default function Form({ onNewTask }) {
 
   return (
     <div className="form-comp">
-      {errorMessages.length !== 0 && (
-        <div className="invalid-data">
-          <p className="invalid-data-title">Invalid data:</p>
-          <ul>
-            {errorMessages.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
+      <button onClick={openModal} className="button-show-modal">
+        <MdPostAdd />
+        Add a New Task
+      </button>
+
+      {showModal && (
+        <div className={modalClass}>
+          <div className="form-modal">
+            <div className="form-init">
+              <h2>Add a New Task:</h2>
+              <button className="button-close-modal" onClick={handleModalClose}>
+                <GrClose />
+              </button>
+            </div>
+            {errorMessages.length !== 0 && (
+              <div className="invalid-data">
+                <p className="invalid-data-title">Invalid data:</p>
+                <ul>
+                  {errorMessages.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              {/* Description Input - Text*/}
+              <label>
+                Description:
+                <input
+                  type="text"
+                  maxLength={150}
+                  placeholder="Enter a description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </label>
+
+              {/* Status Input - Select*/}
+              <div className="status-field">
+                <label>
+                  Status:
+                  <select value={status} onChange={handleStatusChange}>
+                    <option value="">- Select -</option>
+                    <option value={false}>Open</option>
+                    <option value={true}>Completed</option>
+                  </select>
+                </label>
+              </div>
+
+              {/* Priority Input - Radio */}
+              <div className="priority-field">
+                Priority:
+                {PriorityInputsComponent}
+              </div>
+
+              {/* Details Input - Textarea - not required */}
+              <label>
+                Details:
+                <textarea
+                  maxLength={500}
+                  placeholder="Leave the details of the task"
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                />
+              </label>
+
+              {/* Category Input - Checkbox */}
+              <div className="categories-field">
+                Categories:{CategoriesInputsComponent}
+              </div>
+
+              <button>
+                <MdAddTask />
+                Add
+              </button>
+            </form>
+          </div>
         </div>
       )}
-
-      <h2>Add a New Task:</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Description Input - Text*/}
-        <label>
-          Description:
-          <input
-            type="text"
-            maxLength={150}
-            placeholder="Enter a description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-
-        {/* Status Input - Select*/}
-        <div className="status-field">
-          <label>
-            Status:
-            <select value={status} onChange={handleStatusChange}>
-              <option value="">- Select -</option>
-              <option value={false}>Open</option>
-              <option value={true}>Completed</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Priority Input - Radio */}
-        <div className="priority-field">
-          Priority:
-          {PriorityInputsComponent}
-        </div>
-
-        {/* Details Input - Textarea - not required */}
-        <label>
-          Details:
-          <textarea
-            maxLength={500}
-            placeholder="Leave the details of the task"
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-          />
-        </label>
-
-        {/* Category Input - Checkbox */}
-        <div className="categories-field">Categories:{CategoriesInputsComponent}</div>
-
-        <button><MdPostAdd />Add</button>
-      </form>
     </div>
   );
 }
