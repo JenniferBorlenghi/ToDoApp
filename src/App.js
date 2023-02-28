@@ -43,13 +43,17 @@ function App() {
 
   // function that remove a specific task
   const handleRemoveTask = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
+    if (window.confirm("Are you sure?")) {
+      const updatedTasks = tasks.filter((task) => task.id !== id);
+      setTasks(updatedTasks);
+    }
   };
 
   // function that delete all tasks
   const handleClearTasks = () => {
-    setTasks([]);
+    if (window.confirm("Are you sure?")) {
+      setTasks([]);
+    }
   };
 
   return (

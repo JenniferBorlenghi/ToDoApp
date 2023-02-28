@@ -69,10 +69,18 @@
   }
 
   .change-button {
-    @include button-style($grey-color);
+    @include button-style-outlined($grey-color);
+
+    &:hover {
+      @include button-style-filled($grey-color);
+    }
   }
 
   .remove-button {
-    @include button-style($danger-color);
+    @include button-style-outlined($danger-color);
+
+    &:hover {
+      @include button-style-filled($danger-color);
+    }
   }
 }

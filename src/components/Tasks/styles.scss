@@ -57,7 +57,7 @@
   }
 
   .clear-button {
-    @include button-style($secondary-color);
+    @include button-style-outlined($primary-color);
     align-self: center;
     display: flex;
     align-self: center;
@@ -68,6 +68,10 @@
       font-size: 17px;
       margin-left: 3px;
       margin-right: 3px;
+    }
+
+    &:hover {
+      @include button-style-filled($primary-color);
     }
   }
 }

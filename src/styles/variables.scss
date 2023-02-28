@@ -1,13 +1,13 @@
-$text-font:'Source Sans Pro', sans-serif;
-$title-font:'Kalam', cursive;
+$text-font: "Source Sans Pro", sans-serif;
+$title-font: "Kalam", cursive;
 
 $text-color: #2c343c;
 $background-color: #7275a9;
 $primary-color: #a1616e;
 $secondary-color: #37384d;
-$border-color: 	#c1c1c7;
+$border-color: #c1c1c7;
 $success-color: #3ba187;
-$danger-color: 	#93240b;
+$danger-color: #93240b;
 $open-color: #7089a1;
 $grey-color: #657788;
 
@@ -40,12 +40,24 @@ $p4-color: #97a2a6;
   }
 }
 
-@mixin button-style($color) {
-    border: 1px solid $color;
-    color: $color;
-    background-color: white;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 16px;
-    font-family: $text-font;
+@mixin buttons-style {
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 16px;
+  font-family: $text-font;
+  cursor: pointer;
+}
+
+@mixin button-style-outlined($color) {
+  border: 1px solid $color;
+  color: $color;
+  background-color: white;
+  @include buttons-style();
+}
+
+@mixin button-style-filled($color) {
+  border: 1px solid $color;
+  color: white;
+  background-color: $color;
+  @include buttons-style();
 }

@@ -12,14 +12,15 @@ export default function Form({ onNewTask }) {
   const [details, setDetails] = useState("");
   const [categories, setCategories] = useState([]);
 
-  // constant that style the modal when it is opened and closed
+  // constant that define the className of the modal
   const modalClass = showModal ? "modal-open" : "modal-close";
 
-  //
+  // function to open the modal
   const openModal = () => {
     setShowModal(true);
   };
 
+  // function to close the modal, clear error message and inputs value
   const handleModalClose = () => {
     setShowModal(false);
 
@@ -57,16 +58,7 @@ export default function Form({ onNewTask }) {
     if (newErrorMessages.length === 0) {
       onNewTask(description, status, priority, details, categories);
 
-      // cleaning inputs:
-      setDescription("");
-      setStatus("");
-      setPriority("");
-      setDetails("");
-      setCategories([]);
-      setErrorMessages("");
-
-      //close modal
-      setShowModal(false);
+      handleModalClose();
     }
   };
 
@@ -144,23 +136,29 @@ export default function Form({ onNewTask }) {
 
   return (
     <div className="form-comp">
+      {/* Button to open the modal to add a new task */}
       <button onClick={openModal} className="button-show-modal">
         <MdPostAdd />
         Add a New Task
       </button>
 
+      {/* Modal code */}
       {showModal && (
+        // Class that cover all except the form or make the form disappear
         <div className={modalClass}>
           <div className="form-modal">
-            <div className="form-init">
+            {/* header of the modal */}
+            <div className="form-header">
               <h2>Add a New Task:</h2>
               <button className="button-close-modal" onClick={handleModalClose}>
                 <GrClose />
               </button>
             </div>
+
+            {/* error message space after the header if it exists */}
             {errorMessages.length !== 0 && (
               <div className="invalid-data">
-                <p className="invalid-data-title">Invalid data:</p>
+                <p>Invalid data:</p>
                 <ul>
                   {errorMessages.map((error, index) => (
                     <li key={index}>{error}</li>
@@ -169,6 +167,7 @@ export default function Form({ onNewTask }) {
               </div>
             )}
 
+            {/* form inputs */}
             <form onSubmit={handleSubmit}>
               {/* Description Input - Text*/}
               <label>
@@ -216,7 +215,8 @@ export default function Form({ onNewTask }) {
                 Categories:{CategoriesInputsComponent}
               </div>
 
-              <button>
+              {/* submission button to add a task */}
+              <button className="add-submit-button">
                 <MdAddTask />
                 Add
               </button>
