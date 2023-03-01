@@ -37,6 +37,10 @@
         font-size: 23px;
       }
 
+      @include breakpoint-medium {
+        font-size: 24px;
+      }
+
       @include breakpoint-large {
         font-size: 25px;
       }
@@ -52,7 +56,7 @@
       @include breakpoint-medium {
         display: block;
         font-size: 300px;
-        margin-top: -3px;
+        margin-top: -27px;
       }
     }
   }

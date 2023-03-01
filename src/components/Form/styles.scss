@@ -24,6 +24,16 @@
     &:hover {
       @include button-style-outlined($secondary-color);
     }
+
+    @include breakpoint-medium {
+      width: 80%;
+    }
+
+    @include breakpoint-large {
+      width: 70%;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 
   // style of the modal when closed
