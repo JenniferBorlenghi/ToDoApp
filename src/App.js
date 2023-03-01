@@ -59,14 +59,13 @@ function App() {
   return (
     <div className="app-main">
       <Header />
+      <Form onNewTask={handleNewTask} />
       <Tasks
         tasks={tasks}
         onStatusChange={handleStatusChange}
         onRemoveTask={handleRemoveTask}
         onClearTasks={handleClearTasks}
       />
-
-      <Form onNewTask={handleNewTask} />
     </div>
   );
 }
