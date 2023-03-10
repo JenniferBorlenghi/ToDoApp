@@ -3,7 +3,10 @@ import "./styles.scss";
 import { MdPostAdd, MdAddTask } from "react-icons/md";
 import { GrClose } from "react-icons/gr";
 
-export default function Form({ onNewTask }) {
+import { useDispatch } from "react-redux";
+import { addTask } from "../../redux/taskSlice";
+
+export default function Form() {
   const [showModal, setShowModal] = useState(false);
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
@@ -11,6 +14,8 @@ export default function Form({ onNewTask }) {
   const [priority, setPriority] = useState("");
   const [details, setDetails] = useState("");
   const [categories, setCategories] = useState([]);
+
+  const dispatch = useDispatch();
 
   // constant that define the className of the modal
   const modalClass = showModal ? "modal-open" : "modal-close";
@@ -56,7 +61,7 @@ export default function Form({ onNewTask }) {
     setErrorMessages(newErrorMessages);
 
     if (newErrorMessages.length === 0) {
-      onNewTask(description, status, priority, details, categories);
+      dispatch(addTask({ description, status, priority, details, categories }));
 
       handleModalClose();
     }

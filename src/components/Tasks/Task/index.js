@@ -1,14 +1,19 @@
 import "./styles.scss";
-import { BsFillFlagFill, BsToggleOn, BsToggleOff} from "react-icons/bs";
-import {AiFillDelete} from "react-icons/ai";
+import { BsFillFlagFill, BsToggleOn, BsToggleOff } from "react-icons/bs";
+import { AiFillDelete } from "react-icons/ai";
 
-export default function Task({ task, onStatusChange, onRemoveTask }) {
-  const changeTaskStatus = () => {
-    onStatusChange(task.id);
+import { useDispatch } from "react-redux";
+import { statusChange, removeTask } from "../../../redux/taskSlice";
+
+export default function Task({ task }) {
+  const dispatch = useDispatch();
+
+  const handleStatusChange = () => {
+    dispatch(statusChange(task.id));
   };
 
-  const removeTask = () => {
-    onRemoveTask(task.id);
+  const handleRemoveTask = () => {
+    dispatch(removeTask(task.id));
   };
 
   const statusContent = task.status ? "Completed" : "Open";
@@ -30,7 +35,7 @@ export default function Task({ task, onStatusChange, onRemoveTask }) {
 
   const priorityClass = findPriorityClass();
 
-  const changeStatusIcon = task.status ? <BsToggleOn/> : <BsToggleOff />;
+  const changeStatusIcon = task.status ? <BsToggleOn /> : <BsToggleOff />;
 
   return (
     <div className="task-comp">
@@ -41,9 +46,9 @@ export default function Task({ task, onStatusChange, onRemoveTask }) {
           <strong>Status:</strong>{" "}
           <span className={statusContent}>{statusContent}</span>
         </p>
-        <p className="priority-info" >
-          <strong >Priority:</strong>
-          <BsFillFlagFill className={priorityClass}/> {task.priority}
+        <p className="priority-info">
+          <strong>Priority:</strong>
+          <BsFillFlagFill className={priorityClass} /> {task.priority}
         </p>
         {task.details !== "" && (
           <p>
@@ -53,13 +58,18 @@ export default function Task({ task, onStatusChange, onRemoveTask }) {
         {task.categories.length > 0 && (
           <p>
             <strong>Categories:</strong>{" "}
-            <span>{task.categories.join(' | ')}</span>
+            <span>{task.categories.join(" | ")}</span>
           </p>
         )}
       </div>
       <div className="task-actions">
-        <button onClick={changeTaskStatus} className="change-button">{changeStatusIcon} Change Status</button>
-        <button onClick={removeTask} className="remove-button"><AiFillDelete />Remove Task</button>
+        <button onClick={handleStatusChange} className="change-button">
+          {changeStatusIcon} Change Status
+        </button>
+        <button onClick={handleRemoveTask} className="remove-button">
+          <AiFillDelete />
+          Remove Task
+        </button>
       </div>
     </div>
   );
