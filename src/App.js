@@ -1,71 +1,14 @@
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import Form from "./components/Form";
-
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
 import "./styles.scss";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-
-  // function that add a new taskt to the useState task
-  const handleNewTask = (
-    description,
-    status,
-    priority,
-    details,
-    categories
-  ) => {
-    const newTasks = [...tasks];
-    newTasks.push({
-      id: uuidv4(),
-      description,
-      status,
-      priority,
-      details,
-      categories,
-    });
-    setTasks(newTasks);
-  };
-
-  // function that change the status between completed and not completed (toggle between them)
-  const handleStatusChange = (id) => {
-    const updatedTasks = [...tasks];
-    updatedTasks.forEach((task) => {
-      if (task.id === id) {
-        task.status = !task.status;
-      }
-    });
-    setTasks(updatedTasks);
-  };
-
-  // function that remove a specific task
-  const handleRemoveTask = (id) => {
-    if (window.confirm("Are you sure?")) {
-      const updatedTasks = tasks.filter((task) => task.id !== id);
-      setTasks(updatedTasks);
-    }
-  };
-
-  // function that delete all tasks
-  const handleClearTasks = () => {
-    if (window.confirm("Are you sure?")) {
-      setTasks([]);
-    }
-  };
-
   return (
     <div className="app-main">
       <Header />
-      <Form onNewTask={handleNewTask} />
-      <Tasks
-        tasks={tasks}
-        onStatusChange={handleStatusChange}
-        onRemoveTask={handleRemoveTask}
-        onClearTasks={handleClearTasks}
-      />
+      <Form />
+      <Tasks />
     </div>
   );
 }

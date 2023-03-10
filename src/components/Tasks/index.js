@@ -4,28 +4,26 @@ import "./styles.scss";
 import { MdCleaningServices } from "react-icons/md";
 import { TbClipboardList } from "react-icons/tb";
 
-export default function Tasks({
-  tasks,
-  onStatusChange,
-  onRemoveTask,
-  onClearTasks,
-}) {
+import { useSelector, useDispatch } from "react-redux";
+import { clearTasks } from "../../redux/taskSlice";
+
+export default function Tasks() {
+  const tasks = useSelector((state) => state.task.tasks);
+  const dispatch = useDispatch();
+
+  const handleClearTasks = () => {
+    dispatch(clearTasks());
+  };
+
   return (
     <div className="tasks-comp">
       {tasks.length > 0 && (
         <>
           <h2>These are the tasks:</h2>
           {tasks.map((task, index) => {
-            return (
-              <Task
-                key={index}
-                task={task}
-                onStatusChange={onStatusChange}
-                onRemoveTask={onRemoveTask}
-              />
-            );
+            return <Task key={index} task={task} />;
           })}
-          <button className="clear-button" onClick={onClearTasks}>
+          <button className="clear-button" onClick={handleClearTasks}>
             <MdCleaningServices />
             Clear Tasks
           </button>
