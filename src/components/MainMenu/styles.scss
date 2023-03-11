@@ -1,0 +1,29 @@
+@import "./../../styles/variables.scss";
+
+.main {
+  display: flex;
+  background-color: $secondary-color;
+  justify-content: center;
+
+  a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 30px;
+
+    &:hover {
+      background-color: $background-color;
+      cursor: pointer;
+    }
+
+    &.active {
+      background-color: #fff;
+      color: $text-color;
+    }
+
+    @include breakpoint-medium {
+      padding: 15px 35px;
+      font-size: 18px;
+    }
+  }
+}

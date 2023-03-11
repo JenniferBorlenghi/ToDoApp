@@ -1,13 +1,12 @@
 import { useState } from "react";
 import "./styles.scss";
-import { MdPostAdd, MdAddTask } from "react-icons/md";
-import { GrClose } from "react-icons/gr";
+import { MdAddTask } from "react-icons/md";
 
 import { useDispatch } from "react-redux";
 import { addTask } from "../../redux/taskSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Form() {
-  const [showModal, setShowModal] = useState(false);
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
@@ -16,30 +15,7 @@ export default function Form() {
   const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
-
-  // constant that define the className of the modal
-  const modalClass = showModal ? "modal-open" : "modal-close";
-
-  // function to open the modal
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  // function to close the modal, clear error message and inputs value
-  const handleModalClose = () => {
-    setShowModal(false);
-
-    // cleaning error message
-    setErrorMessages([]);
-
-    // cleaning inputs:
-    setDescription("");
-    setStatus("");
-    setPriority("");
-    setDetails("");
-    setCategories([]);
-    setErrorMessages("");
-  };
+  const navigate = useNavigate();
 
   // validating submission and adding the new task
   const handleSubmit = (e) => {
@@ -62,8 +38,7 @@ export default function Form() {
 
     if (newErrorMessages.length === 0) {
       dispatch(addTask({ description, status, priority, details, categories }));
-
-      handleModalClose();
+      navigate("/");
     }
   };
 
@@ -141,94 +116,74 @@ export default function Form() {
 
   return (
     <div className="form-comp">
-      {/* Button to open the modal to add a new task */}
-      <button onClick={openModal} className="button-show-modal">
-        <MdPostAdd />
-        Add a New Task
-      </button>
-
-      {/* Modal code */}
-      {showModal && (
-        // Class that cover all except the form or make the form disappear
-        <div className={modalClass}>
-          <div className="form-modal">
-            {/* header of the modal */}
-            <div className="form-header">
-              <h2>Add a New Task:</h2>
-              <button className="button-close-modal" onClick={handleModalClose}>
-                <GrClose />
-              </button>
-            </div>
-
-            {/* error message space after the header if it exists */}
-            {errorMessages.length !== 0 && (
-              <div className="invalid-data">
-                <p>Invalid data:</p>
-                <ul>
-                  {errorMessages.map((error, index) => (
-                    <li key={index}>{error}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* form inputs */}
-            <form onSubmit={handleSubmit}>
-              {/* Description Input - Text*/}
-              <label>
-                Description:
-                <input
-                  type="text"
-                  maxLength={150}
-                  placeholder="Enter a description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </label>
-
-              {/* Status Input - Select*/}
-              <div className="status-field">
-                <label>
-                  Status:
-                  <select value={status} onChange={handleStatusChange}>
-                    <option value="">- Select -</option>
-                    <option value={false}>Open</option>
-                    <option value={true}>Completed</option>
-                  </select>
-                </label>
-              </div>
-
-              {/* Priority Input - Radio */}
-              <div className="priority-field">
-                Priority:
-                {PriorityInputsComponent}
-              </div>
-
-              {/* Details Input - Textarea - not required */}
-              <label>
-                Details:
-                <textarea
-                  maxLength={500}
-                  placeholder="Leave the details of the task"
-                  value={details}
-                  onChange={(e) => setDetails(e.target.value)}
-                />
-              </label>
-
-              {/* Category Input - Checkbox */}
-              <div className="categories-field">
-                Categories:{CategoriesInputsComponent}
-              </div>
-
-              {/* submission button to add a task */}
-              <button className="add-submit-button">
-                <MdAddTask />
-                Add
-              </button>
-            </form>
-          </div>
+      {/* <div className="form-modal"> */}
+      {/* error message space after the header if it exists */}
+      {errorMessages.length !== 0 && (
+        <div className="invalid-data">
+          <p>Invalid data:</p>
+          <ul>
+            {errorMessages.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
         </div>
       )}
+
+      {/* form inputs */}
+      <form onSubmit={handleSubmit}>
+        {/* Description Input - Text*/}
+        <label>
+          Description:
+          <input
+            type="text"
+            maxLength={150}
+            placeholder="Enter a description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
+
+        {/* Status Input - Select*/}
+        <div className="status-field">
+          <label>
+            Status:
+            <select value={status} onChange={handleStatusChange}>
+              <option value="">- Select -</option>
+              <option value={false}>Open</option>
+              <option value={true}>Completed</option>
+            </select>
+          </label>
+        </div>
+
+        {/* Priority Input - Radio */}
+        <div className="priority-field">
+          Priority:
+          {PriorityInputsComponent}
+        </div>
+
+        {/* Details Input - Textarea - not required */}
+        <label>
+          Details:
+          <textarea
+            maxLength={500}
+            placeholder="Leave the details of the task"
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
+          />
+        </label>
+
+        {/* Category Input - Checkbox */}
+        <div className="categories-field">
+          Categories:{CategoriesInputsComponent}
+        </div>
+
+        {/* submission button to add a task */}
+        <button className="add-submit-button">
+          <MdAddTask />
+          Add
+        </button>
+      </form>
+      {/* </div> */}
     </div>
   );
 }
