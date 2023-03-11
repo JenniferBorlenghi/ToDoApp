@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import TaskListPage from "./pages/TaskListPage";
+import TaskItemPage from "./pages/TaskItemPage";
 import FormPage from "./pages/FormPage";
 import HelpPage from "./pages/HelpPage";
 import HelpIntroductionPage from "./pages/HelpPage/Introduction";
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<TaskListPage />} />
+        <Route path="/:id" element={<TaskItemPage />} />
 
         <Route path="/add" element={<FormPage />} />
 

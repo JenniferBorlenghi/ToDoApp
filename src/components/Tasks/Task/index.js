@@ -4,15 +4,18 @@ import { AiFillDelete } from "react-icons/ai";
 
 import { useDispatch } from "react-redux";
 import { statusChange, removeTask } from "../../../redux/taskSlice";
+import { Link } from "react-router-dom";
 
 export default function Task({ task }) {
   const dispatch = useDispatch();
 
-  const handleStatusChange = () => {
+  const handleStatusChange = (event) => {
+    event.preventDefault();
     dispatch(statusChange(task.id));
   };
 
-  const handleRemoveTask = () => {
+  const handleRemoveTask = (event) => {
+    event.preventDefault();
     dispatch(removeTask(task.id));
   };
 
@@ -38,7 +41,7 @@ export default function Task({ task }) {
   const changeStatusIcon = task.status ? <BsToggleOn /> : <BsToggleOff />;
 
   return (
-    <div className="task-comp">
+    <Link to={"/" + task.id} className="task-comp">
       <div className="task-info">
         <h3>{task.description}</h3>
         <p>Id: {task.id}</p>
@@ -71,6 +74,6 @@ export default function Task({ task }) {
           Remove Task
         </button>
       </div>
-    </div>
+    </Link>
   );
 }

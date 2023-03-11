@@ -3,10 +3,11 @@
 .task-comp {
   border: 1px solid $border-color;
   border-radius: 10px;
-
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: $text-color;
 
   .task-info {
     line-height: 1.8em;
