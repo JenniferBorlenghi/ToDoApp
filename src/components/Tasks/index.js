@@ -19,7 +19,6 @@ export default function Tasks() {
     <div className="tasks-comp">
       {tasks.length > 0 && (
         <>
-          <h2>These are the tasks:</h2>
           {tasks.map((task, index) => {
             return <Task key={index} task={task} />;
           })}

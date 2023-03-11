@@ -1,0 +1,42 @@
+@import "./../../styles/variables.scss";
+
+.help-page {
+  aside {
+    border: solid 1px $secondary-color;
+
+    a {
+      display: block;
+      color: $secondary-color;
+      text-decoration: none;
+      padding: 10px;
+      border-top: solid 1px $secondary-color;
+
+      &.active {
+        background-color: $secondary-color;
+        color: #fff;
+      }
+
+      &:first-child {
+        border-top: none;
+      }
+
+      &:hover {
+        color: $grey-color;
+      }
+    }
+  }
+
+  @include breakpoint-small {
+    display: flex;
+    align-items: flex-start;
+
+    article {
+      flex: 1;
+    }
+
+    aside {
+      width: 200px;
+      margin-left: 2rem;
+    }
+  }
+}
