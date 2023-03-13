@@ -1,0 +1,43 @@
+@import "./../../styles/variables.scss";
+
+.task-item-page {
+  line-height: 1.5rem;
+
+  .priority-info {
+    @include priorities();
+  }
+
+  .task-info {
+    .Completed {
+      color: $success-color;
+    }
+
+    .Open {
+      color: $open-color;
+    }
+  }
+
+  .back-and-edit-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+
+    .back-button {
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      width: 45%;
+
+      @include button-style-filled($primary-color);
+    }
+
+    .edit-button {
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      width: 45%;
+
+      @include button-style-filled($grey-color);
+    }
+  }
+}

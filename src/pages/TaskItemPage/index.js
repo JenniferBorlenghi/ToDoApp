@@ -35,20 +35,23 @@ export default function TaskItemPage() {
   const priorityClass = findPriorityClass();
 
   return (
-    <PageContainer title={task.description}>
-      <p>
+    <PageContainer title={task.description} className="task-item-page">
+      <p className="task-info">
         <strong>Status:</strong>{" "}
         <span className={statusContent}>{statusContent}</span>
       </p>
       <p className="priority-info">
-        <strong>Priority:</strong>
+        <strong>Priority: </strong>
         <BsFillFlagFill className={priorityClass} /> {task.priority}
       </p>
+
       {task.details !== "" && (
         <p>
-          <strong>Details:</strong> {task.details}
+          <strong>Details: </strong>
+          {task.details}
         </p>
       )}
+
       {task.categories.length > 0 && (
         <p>
           <strong>Categories:</strong>{" "}
@@ -56,7 +59,14 @@ export default function TaskItemPage() {
         </p>
       )}
 
-      <Link to="/">Back</Link>
+      <div className="back-and-edit-buttons">
+        <Link to="/" className="back-button">
+          Back
+        </Link>
+        <Link to={"/edit/" + task.id} className="edit-button">
+          Edit
+        </Link>
+      </div>
     </PageContainer>
   );
 }

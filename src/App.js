@@ -1,7 +1,8 @@
 import Header from "./components/Header";
 import TaskListPage from "./pages/TaskListPage";
 import TaskItemPage from "./pages/TaskItemPage";
-import FormPage from "./pages/FormPage";
+import AddTaskPage from "./pages/AddTaskPage";
+import EditTaskPage from "./pages/EditTaskPage";
 import HelpPage from "./pages/HelpPage";
 import HelpIntroductionPage from "./pages/HelpPage/Introduction";
 import HelpAddTasksPage from "./pages/HelpPage/AddTasks";
@@ -18,7 +19,8 @@ function App() {
         <Route path="/" element={<TaskListPage />} />
         <Route path="/:id" element={<TaskItemPage />} />
 
-        <Route path="/add" element={<FormPage />} />
+        <Route path="/add" element={<AddTaskPage />} />
+        <Route path="/edit/:id" element={<EditTaskPage />} />
 
         <Route path="/help" element={<HelpPage />}>
           <Route path="" element={<HelpIntroductionPage />} />
