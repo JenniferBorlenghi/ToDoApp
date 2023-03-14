@@ -114,8 +114,7 @@
       @include button-style-filled($secondary-color);
 
       svg {
-        font-size: 20px;
-        margin-right: 5px;
+        @include svg-style;
       }
 
       &:hover {

@@ -43,7 +43,6 @@ export const taskSlice = createSlice({
         details,
         categories,
       });
-      console.log("handleNewTask");
     },
     statusChange: (state, action) => {
       const id = action.payload;
@@ -64,10 +63,30 @@ export const taskSlice = createSlice({
         state.tasks = [];
       }
     },
+    editTask: (state, action) => {
+      const currentTask = action.payload;
+
+      const id = currentTask.task.id;
+      const description = currentTask.description;
+      const status = currentTask.status;
+      const priority = currentTask.priority;
+      const details = currentTask.details;
+      const categories = currentTask.categories;
+
+      state.tasks.forEach((item) => {
+        if (item.id === id) {
+          item.description = description;
+          item.status = status;
+          item.priority = priority;
+          item.details = details;
+          item.categories = categories;
+        }
+      });
+    },
   },
 });
 
-export const { addTask, statusChange, removeTask, clearTasks } =
+export const { addTask, statusChange, removeTask, clearTasks, editTask } =
   taskSlice.actions;
 
 export default taskSlice.reducer;

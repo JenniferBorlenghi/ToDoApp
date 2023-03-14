@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import NotFoundPage from "./../NotFoundPage";
 import "./styles.scss";
 import { BsFillFlagFill } from "react-icons/bs";
+import { AiFillEdit } from "react-icons/ai";
+import { IoCaretBackCircleSharp } from "react-icons/io5";
 
 export default function TaskItemPage() {
   const params = useParams();
@@ -61,10 +63,11 @@ export default function TaskItemPage() {
 
       <div className="back-and-edit-buttons">
         <Link to="/" className="back-button">
+          <IoCaretBackCircleSharp />
           Back
         </Link>
         <Link to={"/edit/" + task.id} className="edit-button">
-          Edit
+          <AiFillEdit /> Edit
         </Link>
       </div>
     </PageContainer>

@@ -17,8 +17,9 @@ export default function EditTaskPage() {
 
   return (
     <PageContainer title="Edit">
-      <strong>task: {task.id}</strong>
       <Form />
+      <Link to={"/" + task.id}>Back to this task</Link>
+      <Link to="/">Back all task</Link>
     </PageContainer>
   );
 }

@@ -1,21 +1,37 @@
 import { useState } from "react";
 import "./styles.scss";
 import { MdAddTask } from "react-icons/md";
+import { VscSaveAs } from "react-icons/vsc";
 
-import { useDispatch } from "react-redux";
-import { addTask } from "../../redux/taskSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask, editTask } from "../../redux/taskSlice";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function Form() {
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
-  const [errorMessages, setErrorMessages] = useState([]);
-  const [priority, setPriority] = useState("");
-  const [details, setDetails] = useState("");
-  const [categories, setCategories] = useState([]);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const params = useParams();
+
+  // the value task is used when this form edit an existing task, it will change the values of the form
+  const task = useSelector((state) =>
+    state.task.tasks.find((task) => task.id === params.id)
+  );
+
+  const [description, setDescription] = useState(
+    task !== undefined ? task.description : ""
+  );
+  const [status, setStatus] = useState(task !== undefined ? task.status : "");
+  const [errorMessages, setErrorMessages] = useState([]);
+  const [priority, setPriority] = useState(
+    task !== undefined ? task.priority : ""
+  );
+  const [details, setDetails] = useState(
+    task !== undefined ? task.details : ""
+  );
+  const [categories, setCategories] = useState(
+    task !== undefined ? task.categories : []
+  );
 
   // validating submission and adding the new task
   const handleSubmit = (e) => {
@@ -37,7 +53,17 @@ export default function Form() {
     setErrorMessages(newErrorMessages);
 
     if (newErrorMessages.length === 0) {
-      dispatch(addTask({ description, status, priority, details, categories }));
+      if (task === undefined) {
+        dispatch(
+          addTask({ description, status, priority, details, categories })
+        );
+        console.log("add priority", priority);
+      } else {
+        dispatch(
+          editTask({ task, description, status, priority, details, categories })
+        );
+        console.log("edit priority", priority);
+      }
       navigate("/");
     }
   };
@@ -107,7 +133,8 @@ export default function Form() {
         type="checkbox"
         name={item.content}
         checked={categories.includes(item.content)}
-        // checked returns true (option selected) or false (option not selected) -> initially it is false
+        // checked returns true (option selected) or false (option not selected)
+        // initially it is false
         onChange={handleCheckCategory}
       />
       {item.content}
@@ -179,8 +206,18 @@ export default function Form() {
 
         {/* submission button to add a task */}
         <button className="add-submit-button">
-          <MdAddTask />
-          Add
+          {!task && (
+            <>
+              <MdAddTask />
+              Add
+            </>
+          )}
+          {task && (
+            <>
+              <VscSaveAs />
+              Save Changes
+            </>
+          )}
         </button>
       </form>
       {/* </div> */}

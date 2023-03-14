@@ -29,15 +29,25 @@
       width: 45%;
 
       @include button-style-filled($primary-color);
+
+      svg {
+        @include svg-style;
+        margin-top: 2px;
+      }
     }
 
     .edit-button {
       text-decoration: none;
       display: flex;
       justify-content: center;
+      align-items: center;
       width: 45%;
 
       @include button-style-filled($grey-color);
+
+      svg {
+        @include svg-style;
+      }
     }
   }
 }

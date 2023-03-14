@@ -88,3 +88,8 @@ $p4-color: #97a2a6;
     margin-right: 3px;
   }
 }
+
+@mixin svg-style {
+  font-size: 20px;
+  margin-right: 5px;
+}
