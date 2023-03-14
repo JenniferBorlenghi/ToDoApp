@@ -6,6 +6,7 @@ import EditTaskPage from "./pages/EditTaskPage";
 import HelpPage from "./pages/HelpPage";
 import HelpIntroductionPage from "./pages/HelpPage/Introduction";
 import HelpAddTasksPage from "./pages/HelpPage/AddTasks";
+import HelpEditTasksPage from "./pages/HelpPage/EditTasks";
 import HelpRemoveTasksPage from "./pages/HelpPage/RemoveTasks";
 import HelpChangeStatusPage from "./pages/HelpPage/ChangeStatus";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/help" element={<HelpPage />}>
           <Route path="" element={<HelpIntroductionPage />} />
           <Route path="add" element={<HelpAddTasksPage />} />
+          <Route path="edit" element={<HelpEditTasksPage />} />
           <Route path="remove" element={<HelpRemoveTasksPage />} />
           <Route path="change-status" element={<HelpChangeStatusPage />} />
         </Route>

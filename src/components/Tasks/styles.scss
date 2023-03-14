@@ -62,12 +62,13 @@
   }
 
   .clear-button {
-    @include button-style-outlined($primary-color);
+    @include button-style-filled($grey-color);
     align-self: center;
     display: flex;
     align-self: center;
     width: 80%;
     justify-content: center;
+    margin-top: 2rem;
 
     svg {
       font-size: 17px;
@@ -76,7 +77,7 @@
     }
 
     &:hover {
-      @include button-style-filled($primary-color);
+      @include button-style-outlined($grey-color);
     }
   }
 }

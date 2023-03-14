@@ -34,31 +34,70 @@
     justify-content: space-around;
     align-items: center;
     padding: 10px 0;
-  }
 
-  button {
-    display: flex;
-    align-items: center;
+    button {
+      display: flex;
+      align-items: center;
 
-    svg {
-      font-size: 19px;
-      margin-right: 5px;
+      svg {
+        @include svg-style;
+      }
     }
-  }
 
-  .change-button {
-    @include button-style-outlined($grey-color);
+    .change-button {
+      display: flex;
+      justify-content: center;
+      @include button-style-filled($primary-color);
 
-    &:hover {
-      @include button-style-filled($grey-color);
+      &:hover {
+        @include button-style-outlined($primary-color);
+      }
+
+      @include breakpoint-medium {
+        width: 20%;
+      }
     }
-  }
 
-  .remove-button {
-    @include button-style-outlined($danger-color);
+    .edit-task {
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
 
-    &:hover {
+      @include button-style-filled($secondary-color);
+
+      &:hover {
+        @include button-style-outlined($secondary-color);
+        padding: 6px 8px;
+      }
+
+      padding: 6px 8px;
+
+      svg {
+        @include svg-style;
+        margin-top: 2px;
+      }
+
+      @include breakpoint-medium {
+        width: 20%;
+      }
+    }
+
+    .remove-button {
+      display: flex;
+      justify-content: center;
       @include button-style-filled($danger-color);
+
+      &:hover {
+        @include button-style-outlined($danger-color);
+      }
+
+      svg {
+        @include svg-style;
+      }
+
+      @include breakpoint-medium {
+        width: 20%;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import "./styles.scss";
 import { BsFillFlagFill, BsToggleOn, BsToggleOff } from "react-icons/bs";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 import { useDispatch } from "react-redux";
 import { statusChange, removeTask } from "../../../redux/taskSlice";
@@ -69,6 +69,10 @@ export default function Task({ task }) {
         <button onClick={handleStatusChange} className="change-button">
           {changeStatusIcon} Change Status
         </button>
+        <Link to={"/edit/" + task.id} className="edit-task">
+          <AiFillEdit />
+          Edit Task
+        </Link>
         <button onClick={handleRemoveTask} className="remove-button">
           <AiFillDelete />
           Remove Task

@@ -3,7 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import NotFoundPage from "./../NotFoundPage";
 import Form from "../../components/Form";
-// import "./styles.scss";
+import "./styles.scss";
+import { IoCaretBackCircleSharp, IoPlayBackCircle } from "react-icons/io5";
 
 export default function EditTaskPage() {
   const params = useParams();
@@ -16,10 +17,18 @@ export default function EditTaskPage() {
   }
 
   return (
-    <PageContainer title="Edit">
+    <PageContainer title="Edit" className="edit-page">
       <Form />
-      <Link to={"/" + task.id}>Back to this task</Link>
-      <Link to="/">Back all task</Link>
+      <div className="back-buttons">
+        <Link to={"/" + task.id} className="back-task">
+          <IoCaretBackCircleSharp />
+          Back to this task
+        </Link>
+        <Link to="/" className="back-all-tasks">
+          <IoPlayBackCircle />
+          Back all tasks
+        </Link>
+      </div>
     </PageContainer>
   );
 }
