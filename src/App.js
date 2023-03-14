@@ -31,7 +31,6 @@ function App() {
           <Route path="change-status" element={<HelpChangeStatusPage />} />
         </Route>
 
-        {/* TODO - EACH POST, EDIT POST */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
