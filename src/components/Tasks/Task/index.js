@@ -43,27 +43,35 @@ export default function Task({ task }) {
   return (
     <Link to={"/" + task.id} className="task-comp">
       <div className="task-info">
-        <h3>{task.description}</h3>
-        <p>Id: {task.id}</p>
-        <p>
-          <strong>Status:</strong>{" "}
-          <span className={statusContent}>{statusContent}</span>
-        </p>
-        <p className="priority-info">
-          <strong>Priority:</strong>
-          <BsFillFlagFill className={priorityClass} /> {task.priority}
-        </p>
-        {task.details !== "" && (
-          <p>
-            <strong>Details:</strong> {task.details}
-          </p>
-        )}
-        {task.categories.length > 0 && (
-          <p>
-            <strong>Categories:</strong>{" "}
-            <span>{task.categories.join(" | ")}</span>
-          </p>
-        )}
+        <h2>{task.description}</h2>
+        <div className="task_columns">
+          <div className="first_column_task_info">
+            <p>Id: {task.id}</p>
+            <p>
+              <strong>Status:</strong>{" "}
+              <span className={statusContent}>{statusContent}</span>
+            </p>
+
+            <p className="priority-info">
+              <strong>Priority:</strong>
+              <BsFillFlagFill className={priorityClass} /> {task.priority}
+            </p>
+          </div>
+
+          <div className="second_column_task_info">
+            {task.details !== "" && (
+              <p>
+                <strong>Details:</strong> {task.details}
+              </p>
+            )}
+            {task.categories.length > 0 && (
+              <p>
+                <strong>Categories:</strong>{" "}
+                <span>{task.categories.join(" | ")}</span>
+              </p>
+            )}
+          </div>
+        </div>
       </div>
       <div className="task-actions">
         <button onClick={handleStatusChange} className="change-button">

@@ -11,18 +11,37 @@
 
   .task-info {
     line-height: 1.8em;
-    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 
-    .Completed {
-      color: $success-color;
+    h2 {
+      padding: 10px;
+      align-self: flex-start;
     }
+    .task_columns {
+      border-top: 1px solid $border-color;
+      display: flex;
+      padding: 10px;
 
-    .Open {
-      color: $open-color;
-    }
+      .first_column_task_info {
+        width: 40%;
+        .Completed {
+          color: $success-color;
+        }
 
-    .priority-info {
-      @include priorities();
+        .Open {
+          color: $open-color;
+        }
+
+        .priority-info {
+          @include priorities();
+        }
+      }
+
+      .second_column_task_info {
+        width: 50%;
+      }
     }
   }
 

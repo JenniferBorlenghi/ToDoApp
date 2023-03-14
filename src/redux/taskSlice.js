@@ -35,7 +35,8 @@ export const taskSlice = createSlice({
     addTask: (state, action) => {
       const { description, status, priority, details, categories } =
         action.payload;
-      state.tasks.push({
+      // add the task to the beginning of the array
+      state.tasks.unshift({
         id: uuidv4(),
         description,
         status,
