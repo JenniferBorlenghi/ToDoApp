@@ -17,7 +17,6 @@ export default function AddTaskPage() {
   const [addError, setAddError] = useState(false);
 
   const handleAddError = (newError) => {
-    console.log("test", newError);
     setAddError(newError);
   };
 
