@@ -24,6 +24,13 @@
     }
   }
 
+  .clear-tasks-error {
+    @include error-messages-database($danger-color);
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
   .no-tasks {
     display: flex;
     flex-direction: column;

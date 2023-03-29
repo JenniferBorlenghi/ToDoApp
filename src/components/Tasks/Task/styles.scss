@@ -41,6 +41,14 @@
 
       .second_column_task_info {
         width: 50%;
+
+        .status-change-error {
+          @include error-messages-database(rgb(255, 157, 0));
+        }
+
+        .remove-task-error {
+          @include error-messages-database(red);
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import "./styles.scss";
 import { BsFillFlagFill, BsToggleOn, BsToggleOff } from "react-icons/bs";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiFillWarning } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import {
   statusChange,
@@ -9,9 +9,12 @@ import {
 } from "../../../redux/taskSlice";
 import { Link } from "react-router-dom";
 import * as database from "./../../../database";
+import { useState } from "react";
 
 export default function Task({ task }) {
   const dispatch = useDispatch();
+  const [statusChangeErrorMessage, setStatusChangeErrorMessage] = useState("");
+  const [removeTaskErrorMessage, setRemoveTaskErrorMessage] = useState("");
 
   const handleStatusChange = async (event) => {
     event.preventDefault();
@@ -22,7 +25,10 @@ export default function Task({ task }) {
     const statusUpdated = await database.update(task.id, data);
     if (!statusUpdated) {
       alert("Failed to update the status!");
+      setStatusChangeErrorMessage("Failed to update the status!");
       dispatch(getLastStatus(task.id));
+    } else {
+      setStatusChangeErrorMessage("");
     }
   };
 
@@ -33,8 +39,10 @@ export default function Task({ task }) {
 
     if (removedTask) {
       dispatch(removeTask(task.id));
+      setRemoveTaskErrorMessage("");
     } else {
       alert("Failed to remove task");
+      setRemoveTaskErrorMessage("Failed to remove task!");
     }
   };
 
@@ -88,6 +96,18 @@ export default function Task({ task }) {
                 <strong>Categories:</strong>{" "}
                 <span>{task.categories.join(" | ")}</span>
               </p>
+            )}
+            {statusChangeErrorMessage !== "" && (
+              <div className="status-change-error">
+                <AiFillWarning />
+                {statusChangeErrorMessage}
+              </div>
+            )}
+            {removeTaskErrorMessage !== "" && (
+              <div className="remove-task-error">
+                <AiFillWarning />
+                {removeTaskErrorMessage}
+              </div>
             )}
           </div>
         </div>

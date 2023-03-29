@@ -93,3 +93,14 @@ $p4-color: #97a2a6;
   font-size: 20px;
   margin-right: 5px;
 }
+
+@mixin error-messages-database($color) {
+  color: $color;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 5px;
+    font-size: 18px;
+  }
+}

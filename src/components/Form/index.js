@@ -8,12 +8,15 @@ import { useNavigate } from "react-router-dom";
 import * as database from "./../../database";
 import ProcessingDB from "./../../components/ProcessingDB";
 import { emptyTask } from "./../../pages/AddTaskPage";
+import { FaRegSadTear } from "react-icons/fa";
 
-export default function Form({ task }) {
+export default function Form({ task, onAddError }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isSaving, setIsSaving] = useState(false);
+  const [editErrorMessage, setEditErrorMessage] = useState("");
+  const [addErrorMessage, setAddErrorMessage] = useState("");
 
   const [description, setDescription] = useState(task.description);
   const [status, setStatus] = useState(task.status);
@@ -40,23 +43,30 @@ export default function Form({ task }) {
     }
 
     setErrorMessages(newErrorMessages);
-    setIsSaving(true);
+
     if (newErrorMessages.length === 0) {
-      // add
+      setIsSaving(true);
+
+      // add method
       if (task === emptyTask) {
         const data = { description, status, priority, details, categories };
         const savedTaskId = await database.save(data);
+
         if (savedTaskId) {
           data.id = savedTaskId;
+          // change the UI
           dispatch(addTask(data));
           setIsSaving(false);
+          setAddErrorMessage("");
+          // go to the main page
           navigate("/");
         } else {
-          alert("Failed to edit the task.");
-          navigate("/");
+          setIsSaving(false);
+          setAddErrorMessage("Failed to add the task!");
+          onAddError(true);
         }
       } else {
-        // edit
+        // edit method
         dispatch(
           editTask({
             task,
@@ -71,15 +81,16 @@ export default function Form({ task }) {
         const updatedTask = await database.update(task.id, data);
         if (!updatedTask) {
           // let the user know that the update failed
-          alert("Failed to edit the task.");
+          setIsSaving(false);
+          setEditErrorMessage("Failed to edit the task!");
           // reload from database the data unedited
           const tasks = await database.load();
           // set it in the interface
           dispatch(setTasks(tasks));
           // then navigate to the tasks page
-          navigate("/");
         } else {
           setIsSaving(false);
+          setEditErrorMessage("");
           // navigate directly to the tasks page
           navigate("/");
         }
@@ -179,71 +190,86 @@ export default function Form({ task }) {
         </div>
       )}
 
+      {editErrorMessage !== "" && (
+        <div className="edit-error-message">
+          <FaRegSadTear />
+          {editErrorMessage}
+        </div>
+      )}
+
+      {addErrorMessage !== "" && (
+        <div className="add-error-message">
+          <FaRegSadTear />
+          {addErrorMessage}
+        </div>
+      )}
+
       {/* form inputs */}
-      <form onSubmit={handleSubmit}>
-        {/* Description Input - Text*/}
-        <label>
-          Description:
-          <input
-            type="text"
-            maxLength={150}
-            placeholder="Enter a description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-
-        {/* Status Input - Select*/}
-        <div className="status-field">
+      {editErrorMessage === "" && addErrorMessage === "" && (
+        <form onSubmit={handleSubmit}>
+          {/* Description Input - Text*/}
           <label>
-            Status:
-            <select value={status} onChange={handleStatusChange}>
-              <option value="">- Select -</option>
-              <option value={false}>Open</option>
-              <option value={true}>Completed</option>
-            </select>
+            Description:
+            <input
+              type="text"
+              maxLength={150}
+              placeholder="Enter a description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </label>
-        </div>
 
-        {/* Priority Input - Radio */}
-        <div className="priority-field">
-          Priority:
-          {PriorityInputsComponent}
-        </div>
+          {/* Status Input - Select*/}
+          <div className="status-field">
+            <label>
+              Status:
+              <select value={status} onChange={handleStatusChange}>
+                <option value="">- Select -</option>
+                <option value={false}>Open</option>
+                <option value={true}>Completed</option>
+              </select>
+            </label>
+          </div>
 
-        {/* Details Input - Textarea - not required */}
-        <label>
-          Details:
-          <textarea
-            maxLength={500}
-            placeholder="Leave the details of the task"
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-          />
-        </label>
+          {/* Priority Input - Radio */}
+          <div className="priority-field">
+            Priority:
+            {PriorityInputsComponent}
+          </div>
 
-        {/* Category Input - Checkbox */}
-        <div className="categories-field">
-          Categories:{CategoriesInputsComponent}
-        </div>
+          {/* Details Input - Textarea - not required */}
+          <label>
+            Details:
+            <textarea
+              maxLength={500}
+              placeholder="Leave the details of the task"
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+            />
+          </label>
 
-        {/* submission button to add a task */}
-        <button className="add-submit-button">
-          {task === emptyTask && (
-            <>
-              <MdAddTask />
-              Add
-            </>
-          )}
-          {task !== emptyTask && (
-            <>
-              <VscSaveAs />
-              Save Changes
-            </>
-          )}
-        </button>
-      </form>
-      {/* </div> */}
+          {/* Category Input - Checkbox */}
+          <div className="categories-field">
+            Categories:{CategoriesInputsComponent}
+          </div>
+
+          {/* submission button to add a task */}
+          <button className="add-submit-button">
+            {task === emptyTask && (
+              <>
+                <MdAddTask />
+                Add
+              </>
+            )}
+            {task !== emptyTask && (
+              <>
+                <VscSaveAs />
+                Save Changes
+              </>
+            )}
+          </button>
+        </form>
+      )}
     </div>
   );
 }

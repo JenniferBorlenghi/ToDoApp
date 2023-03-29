@@ -42,4 +42,5 @@ export async function loadById(id) {
   } catch (error) {
     throw new Error("Failed to query this task.");
   }
+  return null;
 }

@@ -17,7 +17,6 @@ import { db } from "./config";
 export async function save(data) {
   try {
     const docRef = await addDoc(collection(db, "tasks"), data);
-    console.log("new id", docRef.id);
     return docRef.id;
   } catch (error) {
     console.log("Error adding document: ", error);

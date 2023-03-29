@@ -37,21 +37,15 @@
     }
   }
 
-  // @include breakpoint-small {
-  //   padding: 10px 15px;
-  //   width: 80%;
-  // }
-
-  // @include breakpoint-medium {
-  //   width: 70%;
-  // }
-
-  // @include breakpoint-large {
-  //   width: 60%;
-  // }
-
   div {
     margin-bottom: 1rem;
+  }
+
+  .edit-error-message,
+  .add-error-message {
+    @include error-messages-database($danger-color);
+    font-size: 20px;
+    margin-bottom: 40px;
   }
 
   // form inputs styles

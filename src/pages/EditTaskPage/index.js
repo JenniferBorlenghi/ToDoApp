@@ -18,7 +18,6 @@ export default function EditTaskPage() {
       const task = await database.loadById(params.id);
       task.id = params.id;
       setTask(task);
-      console.log("here", task);
       setIsLoading(false);
     })();
   }, []);
@@ -32,7 +31,7 @@ export default function EditTaskPage() {
   }
 
   return (
-    <PageContainer title="Edit" className="edit-page">
+    <PageContainer title="Edit" className="edit-add-page">
       <Form task={task} />
       <div className="back-buttons">
         <Link to={"/" + params.id} className="back-task">
