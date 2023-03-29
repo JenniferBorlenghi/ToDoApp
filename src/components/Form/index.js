@@ -2,39 +2,28 @@ import { useState } from "react";
 import "./styles.scss";
 import { MdAddTask } from "react-icons/md";
 import { VscSaveAs } from "react-icons/vsc";
-
-import { useDispatch, useSelector } from "react-redux";
-import { addTask, editTask } from "../../redux/taskSlice";
+import { useDispatch } from "react-redux";
+import { addTask, editTask, setTasks } from "../../redux/taskSlice";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import * as database from "./../../database";
+import ProcessingDB from "./../../components/ProcessingDB";
+import { emptyTask } from "./../../pages/AddTaskPage";
 
-export default function Form() {
+export default function Form({ task }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const params = useParams();
 
-  // the value task is used when this form edit an existing task, it will change the values of the form
-  const task = useSelector((state) =>
-    state.task.tasks.find((task) => task.id === params.id)
-  );
+  const [isSaving, setIsSaving] = useState(false);
 
-  const [description, setDescription] = useState(
-    task !== undefined ? task.description : ""
-  );
-  const [status, setStatus] = useState(task !== undefined ? task.status : "");
+  const [description, setDescription] = useState(task.description);
+  const [status, setStatus] = useState(task.status);
   const [errorMessages, setErrorMessages] = useState([]);
-  const [priority, setPriority] = useState(
-    task !== undefined ? task.priority : ""
-  );
-  const [details, setDetails] = useState(
-    task !== undefined ? task.details : ""
-  );
-  const [categories, setCategories] = useState(
-    task !== undefined ? task.categories : []
-  );
+  const [priority, setPriority] = useState(task.priority);
+  const [details, setDetails] = useState(task.details);
+  const [categories, setCategories] = useState(task.categories);
 
   // validating submission and adding the new task
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrorMessages = [];
@@ -51,20 +40,50 @@ export default function Form() {
     }
 
     setErrorMessages(newErrorMessages);
-
+    setIsSaving(true);
     if (newErrorMessages.length === 0) {
-      if (task === undefined) {
-        dispatch(
-          addTask({ description, status, priority, details, categories })
-        );
-        console.log("add priority", priority);
+      // add
+      if (task === emptyTask) {
+        const data = { description, status, priority, details, categories };
+        const savedTaskId = await database.save(data);
+        if (savedTaskId) {
+          data.id = savedTaskId;
+          dispatch(addTask(data));
+          setIsSaving(false);
+          navigate("/");
+        } else {
+          alert("Failed to edit the task.");
+          navigate("/");
+        }
       } else {
+        // edit
         dispatch(
-          editTask({ task, description, status, priority, details, categories })
+          editTask({
+            task,
+            description,
+            status,
+            priority,
+            details,
+            categories,
+          })
         );
-        console.log("edit priority", priority);
+        const data = { description, status, priority, details, categories };
+        const updatedTask = await database.update(task.id, data);
+        if (!updatedTask) {
+          // let the user know that the update failed
+          alert("Failed to edit the task.");
+          // reload from database the data unedited
+          const tasks = await database.load();
+          // set it in the interface
+          dispatch(setTasks(tasks));
+          // then navigate to the tasks page
+          navigate("/");
+        } else {
+          setIsSaving(false);
+          // navigate directly to the tasks page
+          navigate("/");
+        }
       }
-      navigate("/");
     }
   };
 
@@ -141,6 +160,10 @@ export default function Form() {
     </label>
   ));
 
+  if (isSaving) {
+    return <ProcessingDB message="Saving..." />;
+  }
+
   return (
     <div className="form-comp">
       {/* <div className="form-modal"> */}
@@ -206,13 +229,13 @@ export default function Form() {
 
         {/* submission button to add a task */}
         <button className="add-submit-button">
-          {!task && (
+          {task === emptyTask && (
             <>
               <MdAddTask />
               Add
             </>
           )}
-          {task && (
+          {task !== emptyTask && (
             <>
               <VscSaveAs />
               Save Changes

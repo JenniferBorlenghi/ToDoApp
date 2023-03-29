@@ -1,18 +1,24 @@
 import Task from "./Task";
 import "./styles.scss";
-
 import { MdCleaningServices } from "react-icons/md";
 import { TbClipboardList } from "react-icons/tb";
-
 import { useSelector, useDispatch } from "react-redux";
 import { clearTasks } from "../../redux/taskSlice";
+import * as database from "./../../database";
 
 export default function Tasks() {
   const tasks = useSelector((state) => state.task.tasks);
   const dispatch = useDispatch();
 
-  const handleClearTasks = () => {
-    dispatch(clearTasks());
+  const handleClearTasks = async () => {
+    const ids = tasks.map((task) => task.id);
+
+    const resultFromRemovingAllTasks = await database.removeAll(ids);
+    if (resultFromRemovingAllTasks) {
+      dispatch(clearTasks());
+    } else {
+      alert("Failed to remove all tasks");
+    }
   };
 
   return (

@@ -11,28 +11,49 @@ import HelpRemoveTasksPage from "./pages/HelpPage/RemoveTasks";
 import HelpChangeStatusPage from "./pages/HelpPage/ChangeStatus";
 import NotFoundPage from "./pages/NotFoundPage";
 import { Routes, Route } from "react-router-dom";
+import * as database from "./database";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setTasks } from "./redux/taskSlice";
+import ProcessingDB from "./components/ProcessingDB";
 
 function App() {
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const tasks = await database.load();
+      dispatch(setTasks(tasks));
+      setIsLoading(false);
+    })();
+  }, []);
+
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<TaskListPage />} />
-        <Route path="/:id" element={<TaskItemPage />} />
 
-        <Route path="/add" element={<AddTaskPage />} />
-        <Route path="/edit/:id" element={<EditTaskPage />} />
+      {!isLoading ? (
+        <Routes>
+          <Route path="/" element={<TaskListPage />} />
+          <Route path="/:id" element={<TaskItemPage />} />
 
-        <Route path="/help" element={<HelpPage />}>
-          <Route path="" element={<HelpIntroductionPage />} />
-          <Route path="add" element={<HelpAddTasksPage />} />
-          <Route path="edit" element={<HelpEditTasksPage />} />
-          <Route path="remove" element={<HelpRemoveTasksPage />} />
-          <Route path="change-status" element={<HelpChangeStatusPage />} />
-        </Route>
+          <Route path="/add" element={<AddTaskPage />} />
+          <Route path="/edit/:id" element={<EditTaskPage />} />
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          <Route path="/help" element={<HelpPage />}>
+            <Route path="" element={<HelpIntroductionPage />} />
+            <Route path="add" element={<HelpAddTasksPage />} />
+            <Route path="edit" element={<HelpEditTasksPage />} />
+            <Route path="remove" element={<HelpRemoveTasksPage />} />
+            <Route path="change-status" element={<HelpChangeStatusPage />} />
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      ) : (
+        <ProcessingDB message="Loading..." />
+      )}
     </>
   );
 }

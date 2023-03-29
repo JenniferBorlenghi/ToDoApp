@@ -1,22 +1,41 @@
 import "./styles.scss";
 import { BsFillFlagFill, BsToggleOn, BsToggleOff } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-
 import { useDispatch } from "react-redux";
-import { statusChange, removeTask } from "../../../redux/taskSlice";
+import {
+  statusChange,
+  getLastStatus,
+  removeTask,
+} from "../../../redux/taskSlice";
 import { Link } from "react-router-dom";
+import * as database from "./../../../database";
 
 export default function Task({ task }) {
   const dispatch = useDispatch();
 
-  const handleStatusChange = (event) => {
+  const handleStatusChange = async (event) => {
     event.preventDefault();
+
     dispatch(statusChange(task.id));
+
+    const data = { status: !task.status };
+    const statusUpdated = await database.update(task.id, data);
+    if (!statusUpdated) {
+      alert("Failed to update the status!");
+      dispatch(getLastStatus(task.id));
+    }
   };
 
-  const handleRemoveTask = (event) => {
+  const handleRemoveTask = async (event) => {
     event.preventDefault();
-    dispatch(removeTask(task.id));
+
+    const removedTask = await database.remove(task.id);
+
+    if (removedTask) {
+      dispatch(removeTask(task.id));
+    } else {
+      alert("Failed to remove task");
+    }
   };
 
   const statusContent = task.status ? "Completed" : "Open";
