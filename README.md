@@ -8,7 +8,7 @@ List what you need to do! Add categories, priority, details, and more!
 - Redux
 - SCCS, CSS
 - Firebase Firestore
-- Vercel:
+- Vercel: https://to-do-theta-ebon.vercel.app/
 
 ## Routes
 
