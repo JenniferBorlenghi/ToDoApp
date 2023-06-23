@@ -2,6 +2,8 @@
 
 List what you need to do! Add categories, priority, details, and more!
 
+![Alt Text](./readme-files/todo-example.gif)
+
 ## What did I use to build this application?
 
 - React, React Icons, React Router Dom
